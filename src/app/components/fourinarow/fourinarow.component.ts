@@ -36,13 +36,10 @@ export class FourinarowComponent {
     for(let i:number = 0; i<8;i++){
       if (this.Board[xKoord][i] !=0){
         let yKoord :number = i -1;
-        
         this.Board[xKoord][yKoord]= spielerID+1;
         console.log("how often is called")
         this.allPlayerowned[spielerID].push(xKoord,yKoord);
         break;
-
-
       }
       if (i==7 && this.Board[xKoord][i]==0){
         let yKoord:number = i
@@ -50,17 +47,40 @@ export class FourinarowComponent {
         this.allPlayerowned[spielerID].push(xKoord,yKoord)
         break;
       }
-      
-
     }
+  }
+  mousePos : number [] = [1,1]
+  
+  getmouseKoord(x: number,y: number):void{
+    this.mousePos[0] = x;
+    this.mousePos[1] = y;  
 
+  }
+  getHover():number [] {
+    let array : number[];
     
+    let xKoord:number;
+    let yKoord :number;
     
-    
+    xKoord = this.mousePos[0];
     
 
+    for(let i:number = 0; i<8;i++){
+      if (this.Board[xKoord][i] !=0){
+        yKoord = i -1;
+      } 
+    
+      if (i==7 && this.Board[xKoord][i]==0){
+        yKoord= i;
+      }  
+      
+    }
+    array.push(yKoord,xKoord);
+    return array;      
 
-  }  
+  }
+ 
+     
   checkForWin(allPlayerowned: number[][],Board:number[][]) : boolean   {
     let Punkte :number = 0
     const umliegende:number [] = [-1,0,1]; //Liste mit werten für umliegende Felder
@@ -141,14 +161,20 @@ export class FourinarowComponent {
     
   }
   getPlayerClass(x:number,y:number):string{
+    //let hoverd: number[] = this.getHover(); //bug nur oberste reihe lädt kein Bug
     if(this.Board[x][y]==1){
+      
       return("blue");
     }
     else if(this.Board[x][y]==2){
       return(("red"))
     }
+    if(this.Board[x][y]==0){
+      return("grey")
+    }
     else{
       return("grey")
+
     }   
   }
   changeSpielerID():void{
@@ -165,30 +191,16 @@ export class FourinarowComponent {
     
 
   }
-  
-  
   clicked(xKoord:number, yKoord:number):void{
-    
     this.setNewBlock(this.spielerID,xKoord);
-    
-    
     this.changeSpielerID();
-
-
-
-    
-    
-    
     if((this.checkForWin(this.allPlayerowned,this.Board))==true){
-      
-      
       this.showWinScreen = true;
-    
-      }
+    }
        
        
 
-    }
+  }
   reset ():void{
      this.Board = this.createBoard(this.Brett);
      console.log(this.Board);
@@ -198,7 +210,7 @@ export class FourinarowComponent {
      this.player2owned.length = 0;
      
   }
- }
+}
 
 
 
