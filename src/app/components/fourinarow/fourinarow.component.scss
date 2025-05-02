@@ -1,0 +1,58 @@
+.btn{
+    
+    background-color: rgba(14, 17, 11, 0.685);
+    height: 100px;
+    width: 100px;
+    z-index:1;
+    
+}
+.blue{
+    background-color: rgba(51, 51, 134, 0.795);
+
+
+}
+.red{
+    background-color: red;
+}
+.Board{
+    position : fixed;
+    margin: 5% 25%;
+    z-index:0;
+}
+.winscreen{
+    position:absolute ;
+    
+    background-color: darkslategrey;
+    height: 250px;
+    width: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.7;   
+    z-index: 9;
+}
+.textclass{
+ 
+    
+    text-align: center;
+    font-size : 30px;
+    color: rgb(9, 240, 240);
+    text-decoration-thickness: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+
+
+
+}
+.resetButton{
+    position: absolute;
+    height:75px;
+    width:200px;
+    background-color: red;
+    opacity: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+
+    
+}

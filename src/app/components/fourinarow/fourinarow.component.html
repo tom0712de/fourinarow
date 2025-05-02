@@ -1,0 +1,42 @@
+<!-- <!DOCTYPE html>
+<button (click)="clicked(0)" class="btn" ></button>
+<button (click)="clicked(1)" class="btn" ></button>
+<button (click)="clicked(2)" class="btn" ></button>
+<button (click)="clicked(3)" class="btn" ></button>
+<button (click)="clicked(4)" class="btn" ></button>
+<button (click)="clicked(5)" class="btn" ></button>
+<button (click)="clicked(6)" class="btn" ></button>
+<button (click)="clicked(7)" class="btn" ></button>
+<button (click)="clicked(8)" class="btn" ></button> -->
+
+
+
+
+<div class = "Board">
+    <div *ngFor="let column of Board;let y = index">
+        <span *ngFor="let row of column; let x = index">
+            
+            <button (click)="clicked(x,y)" class="btn" [ngClass]="getPlayerClass(x,y)"></button>
+        </span>
+    </div> 
+    <div *ngIf="showWinScreen"class ="winscreen">
+        <p class = "textclass">
+            {{text}} WON !!!
+
+        </p>
+        <button (click) = "reset()" class = "resetButton">
+            <p class = "textclass">
+                restart
+
+            </p>
+
+        </button>
+        
+
+
+
+    </div>
+</div>
+
+
+
