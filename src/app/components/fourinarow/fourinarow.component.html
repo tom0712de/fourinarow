@@ -7,17 +7,17 @@
     <div *ngFor="let column of Board;let y = index">
         <span *ngFor="let row of column; let x = index">
             
-            <button (click)="clicked(x,y)" class="btn" [ngClass]="getPlayerClass(x,y)" (mouseenter) = "getmouseKoord(x,y)"></button>
+            <button (click)="clicked(x,y)" class="btn" [ngClass]="getPlayerClass(x,y)" (mouseenter) = "getmouseKoord(x,y)" [disabled] = "showWinScreen"></button>
         </span>
     </div> 
     <div *ngIf="showWinScreen"class ="winscreen">
         <p class = "textclass">
-            {{text}} WON !!!
+            {{text}} hat gewonnen !!!
 
         </p>
         <button (click) = "reset()" class = "resetButton">
             <p class = "textclass">
-                restart
+                Neues Spiel
 
             </p>
 

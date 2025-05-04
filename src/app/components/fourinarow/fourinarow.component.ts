@@ -13,7 +13,7 @@ export class FourinarowComponent {
   btnState:string
   text: string = "";
   showWinScreen: boolean = false;
- 
+   
 
   createBoard(array:number [][]):number[][]{ //oben links 00 unten rechts 77
     for(let i= 0;i<8;i++){
@@ -37,7 +37,7 @@ export class FourinarowComponent {
       if (this.Board[xKoord][i] !=0){
         let yKoord :number = i -1;
         this.Board[xKoord][yKoord]= spielerID+1;
-        console.log("how often is called")
+        
         this.allPlayerowned[spielerID].push(xKoord,yKoord);
         break;
       }
@@ -57,10 +57,11 @@ export class FourinarowComponent {
 
   }
   getHover():number [] {
-    let array : number[];
+    let array : number[] = [];
     
     let xKoord:number;
     let yKoord :number;
+   
     
     xKoord = this.mousePos[0];
     
@@ -68,14 +69,16 @@ export class FourinarowComponent {
     for(let i:number = 0; i<8;i++){
       if (this.Board[xKoord][i] !=0){
         yKoord = i -1;
+        break;
       } 
     
       if (i==7 && this.Board[xKoord][i]==0){
         yKoord= i;
+        break;
       }  
       
     }
-    array.push(yKoord,xKoord);
+    array.push(xKoord,yKoord);
     return array;      
 
   }
@@ -91,7 +94,6 @@ export class FourinarowComponent {
       for(let ind1:number =0;ind1<3;ind1++){
         for(let ind2:number = 0;ind2<3;ind2++){
           Punkte = 0;
-          console.log("new point")
           if ((x+umliegende[ind1]>=0)&&(x+umliegende[ind1]<=7)&&(y+umliegende[ind2]>=0)&&(y+umliegende[ind2]<=7)){ //checkt ob zucheckendes Feld exsitiert         
             if(( Board[x+umliegende[ind1]][y+umliegende[ind2]] == 1)&&(umliegende[ind1]*10+umliegende[ind2]*5)!=0){ //checkt alle möglichen umliegenden //fix muss noch übertragen werden 
              
@@ -109,7 +111,7 @@ export class FourinarowComponent {
                     break
                  }
                  if (Punkte == 2){
-                  this.text = "Blue";
+                  this.text = "Blau";
                   return true;  
                 }
               }
@@ -148,7 +150,7 @@ export class FourinarowComponent {
             }
           }
           if (Punkte == 2){
-            this.text = "Red";              
+            this.text = "Rot";              
             return true;                               
           }  
         } 
@@ -161,7 +163,8 @@ export class FourinarowComponent {
     
   }
   getPlayerClass(x:number,y:number):string{
-    //let hoverd: number[] = this.getHover(); //bug nur oberste reihe lädt kein Bug
+    let hoverd: number[] = this.getHover(); 
+    
     if(this.Board[x][y]==1){
       
       return("blue");
@@ -169,13 +172,20 @@ export class FourinarowComponent {
     else if(this.Board[x][y]==2){
       return(("red"))
     }
-    if(this.Board[x][y]==0){
-      return("grey")
-    }
-    else{
-      return("grey")
 
-    }   
+
+    if(x== hoverd[0] && y ==hoverd[1] && this.spielerID == 1 ){
+      return("hoverRed")
+    }
+    if(x== hoverd[0] && y ==hoverd[1] && this.spielerID == 0 ){
+      
+      return("hoverBlue");
+    }
+    else {
+      return("grey");
+    }
+
+   
   }
   changeSpielerID():void{
     let temp :number = 10;
@@ -203,7 +213,7 @@ export class FourinarowComponent {
   }
   reset ():void{
      this.Board = this.createBoard(this.Brett);
-     console.log(this.Board);
+     
      this.showWinScreen = false;
   
      this.player1owned.length = 0;
