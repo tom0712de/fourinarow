@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-fourinarow',
@@ -8,14 +9,18 @@ import { CommonModule } from '@angular/common';
   styleUrl: './fourinarow.component.scss'
 })
 export class FourinarowComponent {
+  constructor(private router: Router) {}
   boardStatus:boolean = true;
   Brett:number[][] =[];
   btnState:string
   text: string = "";
   showWinScreen: boolean = false;
+  
+  
    
 
-  createBoard(array:number [][]):number[][]{ //oben links 00 unten rechts 77
+  createBoard():number[][]{ //oben links 00 unten rechts 77
+    let array:number[][] = [];
     for(let i= 0;i<8;i++){
       array[i] =new Array<number>();;
       for(let j= 0;j<8;j++){
@@ -25,7 +30,7 @@ export class FourinarowComponent {
     }
     return(array)
   }
-  Board: number [][] = this.createBoard(this.Brett) 
+  Board: number [][] = this.createBoard();
   spielerID : number = 0
   player1owned:number[]= [];
   player2owned:number[]= []
@@ -33,15 +38,15 @@ export class FourinarowComponent {
 
 
   setNewBlock(spielerID:number,xKoord:number):void{
-    for(let i:number = 0; i<8;i++){
-      if (this.Board[xKoord][i] !=0){
+    for(let i:number = 0; i<8;i++){ 
+      if (this.Board[xKoord][i] !=0){ //check for lowest claimed Block
         let yKoord :number = i -1;
         this.Board[xKoord][yKoord]= spielerID+1;
         
         this.allPlayerowned[spielerID].push(xKoord,yKoord);
         break;
       }
-      if (i==7 && this.Board[xKoord][i]==0){
+      if (i==7 && this.Board[xKoord][i]==0){ //wenn kein Block in row 
         let yKoord:number = i
         this.Board[xKoord][yKoord] = spielerID+1
         this.allPlayerowned[spielerID].push(xKoord,yKoord)
@@ -51,36 +56,28 @@ export class FourinarowComponent {
   }
   mousePos : number [] = [1,1]
   
-  getmouseKoord(x: number,y: number):void{
+  getmouseKoord(x: number,y: number):void{ //is called on mouseenter
     this.mousePos[0] = x;
     this.mousePos[1] = y;  
 
   }
   getHover():number [] {
     let array : number[] = [];
-    
     let xKoord:number;
     let yKoord :number;
-   
-    
     xKoord = this.mousePos[0];
-    
-
     for(let i:number = 0; i<8;i++){
       if (this.Board[xKoord][i] !=0){
         yKoord = i -1;
         break;
-      } 
-    
+      }  
       if (i==7 && this.Board[xKoord][i]==0){
         yKoord= i;
         break;
-      }  
-      
+      }   
     }
     array.push(xKoord,yKoord);
     return array;      
-
   }
  
      
@@ -212,13 +209,20 @@ export class FourinarowComponent {
 
   }
   reset ():void{
-     this.Board = this.createBoard(this.Brett);
+     this.Board = this.createBoard();
      
      this.showWinScreen = false;
   
      this.player1owned.length = 0;
      this.player2owned.length = 0;
      
+  }
+
+
+  
+  goMenu(){
+    this.router.navigate(["/"]);
+
   }
 }
 

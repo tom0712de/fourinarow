@@ -1,14 +1,10 @@
-
-
-
-
 <div  class = "Board">
     <div *ngFor="let column of Board;let x = index">
         <div *ngFor="let row of column; let y = index">
             
             <button
                 (click)="clicked(x,y)"
-                class="btn " 
+                class="btn" 
                 [style.grid-column]="y"
                 [style.grid-row]="x"
                 [ngClass]="getPlayerClass(x,y)" 
@@ -45,6 +41,16 @@
 
     </div>
 </div>
+<div class = "sidebar">
+    <button class ="tetris" [style.grid-row] = 1 (click) = "tetris()">
+        <p>
+            Tetris
+        </p>
 
+    </button>
+    <button class = "tetris pos2 "  (click)="changeBombSelected()">
 
+    </button>
+
+</div>
 

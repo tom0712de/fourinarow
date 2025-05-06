@@ -1,0 +1,21 @@
+.startBtn{
+    background-color: rgb(209, 189, 189);
+    height:75px;
+    width:200px;
+    border-radius: 10px;
+    margin: 50px;
+    
+    
+
+}
+.btnBox{
+    position: fixed; 
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    top : 550px;
+
+}
+.h1{
+    text-align: center;
+}
