@@ -4,11 +4,20 @@
 
 
 <div class = "Board">
-    <div *ngFor="let column of Board;let y = index">
-        <span *ngFor="let row of column; let x = index">
+    <div *ngFor="let column of Board;let x = index">
+        <div *ngFor="let row of column; let y = index">
             
-            <button (click)="clicked(x,y)" class="btn" [ngClass]="getPlayerClass(x,y)" (mouseenter) = "getmouseKoord(x,y)" [disabled] = "showWinScreen"></button>
-        </span>
+            <button
+                (click)="clicked(x,y)"
+                class="btn" 
+                [style.grid-column]="y"
+                [style.grid-row]="x"
+                [ngClass]="getPlayerClass(x,y)" 
+                (mouseenter) = "getmouseKoord(x,y)" 
+                [disabled] = "showWinScreen" >
+              
+            </button>
+        </div>
     </div> 
     <div *ngIf="showWinScreen"class ="winscreen">
         <p class = "textclass">

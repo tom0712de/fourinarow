@@ -19,6 +19,9 @@
     position : fixed;
     margin: 5% 25%;
     z-index:0;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9,1fr);
 }
 .winscreen{
     position:absolute ;
@@ -26,9 +29,9 @@
     background-color: darkslategrey;
     height: 250px;
     width: 500px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 250px;
+    left: 150px;
+    
     opacity: 0.7;   
     z-index: 9;
 }
