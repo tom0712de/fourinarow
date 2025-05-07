@@ -3,45 +3,52 @@
 
 <div class="flex justify-center">
     <div  class = "min-h-0 inline-grid grid-cols-8 bg-gray-400 p-2 ">
-        <div *ngFor="let column of Board;let x = index">
+        <div *ngFor="let column of baseGameService.Board;let x = index">
             <div *ngFor="let row of column; let y = index">
                 
                 <button
-                    (click)="clicked(x,y)"
+                    (click)="baseGameService.clicked(x,y)"
                     class="rounded-full w-20 h-20 " 
                     [style.grid-column]="y"
                     [style.grid-row]="x"
-                    [ngClass]="getPlayerClass(x,y)" 
-                    (mouseenter) = "getmouseKoord(x,y)" 
-                    [disabled] = "showWinScreen" >
+                    [ngClass]="baseGameService.getPlayerClass(x,y)" 
+                    (mouseenter) = "baseGameService.getmouseKoord(x,y)" 
+                    [disabled] = "baseGameService.showWinScreen" >
                 
                 </button>
             </div>
         </div> 
-        <div *ngIf="showWinScreen"class ="winscreen">
-            <p class = "textclass">
-                {{text}} hat gewonnen !!!
-
-            </p>
-            <div class = "menuDiv">
-                <button (click) = "reset()" class = "menuBtn1">
-                    <p class = "textclass">
-                        Neues Spiel
-
-                    </p>
-
-                </button>
-                <button (click) = "goMenu()" class = "menuBtn1">
-                    <p class = "textclass">
-                        Hauptmenu
-
-                    </p>
-
-                </button>
-            </div>    
-            
-        </div>
     </div>
+    <div *ngIf="baseGameService.showWinScreen"class =" min-w-0 inline-grid absolute bg-gray-400 z-9  top-75  flex items-center justify-center">
+        <p class = "row-start-1 text-center text-xl m-1,5 ">
+            {{baseGameService.text}} hat gewonnen !!!
+
+        </p>
+        <div class = "menuDiv">
+            <button (click) = "baseGameService.reset()" class = "bg-red-500 rounded-[10px] w-50 h-20 m-1">
+                <p class = "textclass">
+                    Neues Spiel
+
+                </p>
+
+            </button>
+            <button (click) = "baseGameService.goMenu()" class = "bg-red-500 rounded-[10px] w-50 h-20 m-1">
+                <p class = "textclass">
+                    Hauptmenu
+
+                </p>
+
+            </button>
+        </div>    
+        
+    </div>
+  
+        
+
+
 </div>
+    
+        
+    
 
 

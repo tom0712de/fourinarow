@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BasegameService {
 
-  constructor() {    } 
+  constructor(private router: Router) {} 
   spielerID : number = 0;
   player1owned:number[]= [];
   player2owned:number[]= [];
@@ -16,6 +17,7 @@ export class BasegameService {
   showWinScreen: boolean = false;
   allPlayerowned:number[][] =[this.player1owned,this.player2owned]
   mousePos : number [] = [1,1]
+  dropMode : boolean= true;
 
 
 
@@ -31,7 +33,24 @@ export class BasegameService {
     return(array)
   }
   Board :number [][] =this.createBoard(); 
+  gravityCheck(){
+    for(let x = 0;x<8;x++){
+      for(let y = 0;y<8;y++){
+        if(this.Board[x][y] != 0){
+          if(this.Board[x][y+1] == 0){
+            
+            this.Board[x][y+1] = this.Board[x][y]
+            this.Board[x][y] = 0;
+            this.gravityCheck()
+  
+          }
+        }
+      }
+    }
+  }
+   
   setNewBlock(spielerID:number,xKoord:number):void{
+    
     for(let i:number = 0;i<8;i++){ 
       if (this.Board[xKoord][i] !=0){ //check for lowest claimed Block
         let yKoord :number = i -1;
@@ -54,12 +73,17 @@ export class BasegameService {
 
   }
   getHover():number [] {
+    
+
 
     
       let array : number[] = [];
       let xKoord:number;
       let yKoord :number;
       xKoord = this.mousePos[0];
+      if (this.dropMode == false){
+        return(this.mousePos)
+      }
       for(let i:number = 0; i<8;i++){
         if (this.Board[xKoord][i] !=0){
           yKoord = i -1;
@@ -187,4 +211,24 @@ export class BasegameService {
        
 
   
+
+reset ():void{
+  this.Board = this.createBoard();
+  
+  this.showWinScreen = false;
+
+  this.player1owned.length = 0;
+  this.player2owned.length = 0;
+  this.dropMode = true;
+  
+}
+
+
+
+goMenu(){
+this.reset()
+ this.router.navigate(["/"]);
+
+}
+
 }
