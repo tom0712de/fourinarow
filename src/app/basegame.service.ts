@@ -1,16 +1,11 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { BasegameService } from '../basegame.service';
+import { Injectable } from '@angular/core';
 
-@Component({
-  selector: 'app-party',
-  imports: [CommonModule],
-  templateUrl: './party.component.html',
-  styleUrl: './party.component.scss'
+@Injectable({
+  providedIn: 'root'
 })
-export class PartyComponent {
-  constructor(private router: Router, private baseGameService: BasegameService ) {}
+export class BasegameService {
+
+  constructor() {    } 
   spielerID : number = 0;
   player1owned:number[]= [];
   player2owned:number[]= [];
@@ -21,16 +16,11 @@ export class PartyComponent {
   showWinScreen: boolean = false;
   allPlayerowned:number[][] =[this.player1owned,this.player2owned]
   mousePos : number [] = [1,1]
-  bombeSelcted :boolean = false;
-  swapSelected:boolean = false;
-  Selected: boolean[] = [this.swapSelected,this.bombeSelcted];
-  
 
 
 
   createBoard():number[][]{ //oben links 00 unten rechts 77
     let array:number[][] = [];
-    this.baseGameService.Board
     for(let i= 0;i<8;i++){
       array[i] =new Array<number>();;
       for(let j= 0;j<8;j++){
@@ -64,11 +54,8 @@ export class PartyComponent {
 
   }
   getHover():number [] {
-    if((this.bombeSelcted == true)|| this.swapSelected == true){
-      return(this.mousePos)
 
-    }
-    else{
+    
       let array : number[] = [];
       let xKoord:number;
       let yKoord :number;
@@ -85,20 +72,9 @@ export class PartyComponent {
       }
       array.push(xKoord,yKoord);
       return array; 
-    }     
+       
   }
-  changeBombSelected(){
-    console.log("2");
-    if (this.bombeSelcted == false){
-      this.swapSelected = false;
 
-      this.bombeSelcted = true;
-      
-    }
-    else {
-      this.bombeSelcted = false;
-    }
-  }
   checkForWin(allPlayerowned: number[][],Board:number[][]) : boolean   {
 
     let Punkte :number = 0
@@ -198,23 +174,7 @@ export class PartyComponent {
 
   }
   clicked(xKoord:number, yKoord:number):void{
-    if (this.bombeSelcted == true){
-      this.Bomb(yKoord,xKoord);
-      this.changeSpielerID();
-      return;
-      
-    }
-    if(this.swapSelected == true){
-      this.Board[xKoord][yKoord] = this.spielerID+1;
-      this.changeSpielerID();
-      if((this.checkForWin(this.allPlayerowned,this.Board))==true){ 
-        this.showWinScreen = true;
-      }
-      this.swapSelected =false;
-      return;
 
-    }
-    else{
       this.setNewBlock(this.spielerID,xKoord);
       this.changeSpielerID();
       if((this.checkForWin(this.allPlayerowned,this.Board))==true){
@@ -226,76 +186,5 @@ export class PartyComponent {
        
        
 
-  }
-  reset ():void{
-    this.Board = this.createBoard();
-    
-    this.showWinScreen = false;
- 
-    this.player1owned.length = 0;
-    this.player2owned.length = 0;
-    
- }
- goMenu(){
-  this.player1owned.length = 0;
-  this.player2owned.length = 0;
-  this.router.navigate(["/"]);
-
-}
-
-Bomb(yKoord:number,xKoord:number){
-  const umliegende:number [] = [-1,0,1];
-  this.bombeSelcted = false;
-  for(let xadd = 0;xadd<3;xadd++){
-    for(let yadd = 0;yadd<3;yadd++){
-      if ((xKoord+umliegende[xadd]>=0)&&(xKoord+umliegende[xadd]<=7)&&(yKoord+umliegende[yadd]>=0)&&(yKoord+umliegende[yadd]<=7)){
-        this.Board[xKoord+umliegende[xadd]][yKoord+umliegende[yadd]] = 0;
-        
-      }
-    }
-  }
-}
-
-changeSwapSelected(){
-  console.log("2");
-  if (this.swapSelected == false){
-    this.bombeSelcted = false;
-
-    this.swapSelected = true;
-    
-  }
-  else {
-    this.swapSelected = false;
-  }
-}
-
-tetris(){
-  this.changeSpielerID()
   
-  let counter:number = 0;
-  
-  for(let y = 0;y<8;y++){
-    counter = 0;
-    
-    for(let x = 0;x<8;x++){
-      
-      if (this.Board[x][y] != 0){
-        counter++;
-        if (counter == 7){
-         
-  
-          for(let x = 0;x<8;x++){
-            this.Board[x][y] =0;  
-            }
-          }
-      }
-    }
-    }
-  }  
 }
-
-
-
-
-
-

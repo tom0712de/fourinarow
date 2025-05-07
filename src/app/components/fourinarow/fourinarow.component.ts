@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { BasegameService } from '../../basegame.service';
+
 
 @Component({
   selector: 'app-fourinarow',
@@ -9,7 +12,7 @@ import { Router } from '@angular/router';
   styleUrl: './fourinarow.component.scss'
 })
 export class FourinarowComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private baseGameService: BasegameService ) {}
   boardStatus:boolean = true;
   Brett:number[][] =[];
   btnState:string
@@ -169,17 +172,23 @@ export class FourinarowComponent {
     else if(this.Board[x][y]==2){
       return(("red"))
     }
-
-
     if(x== hoverd[0] && y ==hoverd[1] && this.spielerID == 1 ){
       return("hoverRed")
     }
     if(x== hoverd[0] && y ==hoverd[1] && this.spielerID == 0 ){
       
       return("hoverBlue");
+    }   
+    if((x!= hoverd[0] ||  y !=hoverd[1])&& (this.Board[x][y]==0)) {
+      
+      return("rounded-full bg-white");
+     
     }
+
+
+
     else {
-      return("grey");
+      return("");
     }
 
    

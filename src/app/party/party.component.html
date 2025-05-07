@@ -1,56 +1,95 @@
-<div  class = "Board">
-    <div *ngFor="let column of Board;let x = index">
-        <div *ngFor="let row of column; let y = index">
+<div class="flex justify-center">    
+    <div  class = "min-h-0 inline-grid grid-cols-8 bg-gray-400 p-2 ">
+        <div *ngFor="let column of Board;let x = index">
+            <div *ngFor="let row of column; let y = index">
+                
+                <button
+
+                    (click)="clicked(x,y)"
+                    class=" rounded-full w-20 h-20 " 
+                    [style.grid-column]="y"
+                    [style.grid-row]="x"
+                    [ngClass]="getPlayerClass(x,y)" 
+                    (mouseenter) = "getmouseKoord(x,y)" 
+                    [disabled] = "showWinScreen" >
+                
+                </button>
+            </div>
+        </div> 
+        <div *ngIf="showWinScreen"class ="winscreen">
+            <p class = "textclass">
+                {{text}} hat gewonnen !!!
+
+            </p>
+            <div class = "menuDiv">
+                <button (click) = "reset()" class = "menuBtn1">
+                    <p class = "textclass">
+                        Neues Spiel
+
+                    </p>
+
+                </button>
+                <button (click) = "goMenu()" class = "menuBtn1">
+                    <p class = "textclass">
+                        Hauptmenu
+
+                    </p>
+
+                </button>
+            </div>    
             
-            <button
-                (click)="clicked(x,y)"
-                class="btn" 
-                [style.grid-column]="y"
-                [style.grid-row]="x"
-                [ngClass]="getPlayerClass(x,y)" 
-                (mouseenter) = "getmouseKoord(x,y)" 
-                [disabled] = "showWinScreen" >
-              
-            </button>
+
+
+
         </div>
-    </div> 
-    <div *ngIf="showWinScreen"class ="winscreen">
-        <p class = "textclass">
-            {{text}} hat gewonnen !!!
-
-        </p>
-        <div class = "menuDiv">
-            <button (click) = "reset()" class = "menuBtn1">
-                <p class = "textclass">
-                    Neues Spiel
-
-                </p>
-
-            </button>
-            <button (click) = "goMenu()" class = "menuBtn1">
-                <p class = "textclass">
-                    Hauptmenu
-
-                </p>
-
-            </button>
-        </div>    
-        
-
-
+    </div>
+</div>    
+<div class = "absolute inline-grid grid-cols-1 p-2 top-10 left-100 gap-1">
+    <div class="w-20 h-20 rounded-[10px] bg-red-500 row-start-1">
 
     </div>
-</div>
-<div class = "sidebar">
-    <button class ="tetris" [style.grid-row] = 1 (click) = "tetris()">
+    <button class ="w-20 h-20 rounded-[10px] row-start-2 bg-gray-500 " (click) = "tetris()" [ngClass] = "{'disabled':(spielerID == 0)}">
         <p>
             Tetris
         </p>
 
     </button>
-    <button class = "tetris pos2 "  (click)="changeBombSelected()">
+    <button class = "w-20 h-20 rounded-[10px] row-start-3 bg-gray-500  "  (click)="changeBombSelected()" [ngClass] = "{ 'bg-yellow-300': bombeSelcted}" [ngClass] = "{'disabled':(spielerID == 0)}">
+        <p>
+            Bomb
+        </p>
 
     </button>
+    <button class = "w-20 h-20 rounded-[10px] row-start-4 bg-gray-500" (click) = "changeSwapSelected()" [ngClass] = "{ 'bg-yellow-300': swapSelected}" [ngClass] = "{'disabled':(spielerID == 0)}">
+        <p>
+            swap
+        </p>
+    </button>
+    
+
+</div>
+<div class = "absolute inline-grid grid-cols-1 p-2 top-10 right-100 gap-1">
+    <div class="w-20 h-20 rounded-[10px] bg-blue-500 row-start-1">
+
+    </div>
+    <button class ="w-20 h-20 rounded-[10px] row-start-2 bg-gray-500 " (click) = "tetris()" [ngClass] = "{'disabled':(spielerID == 1)}">
+        <p>
+            Tetris
+        </p>
+
+    </button>
+    <button class = "w-20 h-20 rounded-[10px] row-start-3 bg-gray-500  "  (click)="changeBombSelected()" [ngClass] = "{ 'bg-yellow-300': bombeSelcted}" [ngClass] = "{'disabled':(spielerID == 1)}">
+        <p>
+            Bomb
+        </p>
+
+    </button>
+    <button class = "w-20 h-20 rounded-[10px] row-start-4 bg-gray-500" (click) = "changeSwapSelected()" [ngClass] = "{ 'bg-yellow-300': swapSelected}" [ngClass] = "{'disabled':(spielerID == 1)}">
+        <p>
+            swap
+        </p>
+    </button>
+    
 
 </div>
 
