@@ -48,19 +48,19 @@
     <div class="w-20 h-20 rounded-[10px] bg-red-500 row-start-1">
 
     </div>
-    <button class ="w-20 h-20 rounded-[10px] row-start-2 bg-gray-500 " (click) = "tetris()" [disabled] = "(baseGameService.spielerID == 0)">
+    <button class ="w-20 h-20 rounded-[10px] row-start-2 bg-gray-500 " (click) = "tetris()" [disabled] = "disableArray[5]">
         <p>
             Tetris
         </p>
 
     </button>
-    <button class = "w-20 h-20 rounded-[10px] row-start-3 bg-gray-500  "  (click)="changeBombSelected()" [ngClass] = "{ 'bg-yellow-300': selectedAll[1]['bomb']}" [disabled] = "(baseGameService.spielerID == 0)">
+    <button class = "w-20 h-20 rounded-[10px] row-start-3 bg-gray-500  "  (click)="changeBombSelected()" [ngClass] = "{ 'bg-yellow-300': selectedAll[1]['bomb']}" [disabled] = "disableArray[4]">
         <p>
             Bomb
         </p>
 
     </button>
-    <button class = "w-20 h-20 rounded-[10px] row-start-4 bg-gray-500" (click) = "changeSwapSelected()" [ngClass] = "{ 'bg-yellow-300': selectedAll[1]['swap']}" [disabled] = "(baseGameService.spielerID == 0)">
+    <button class = "w-20 h-20 rounded-[10px] row-start-4 bg-gray-500" (click) = "changeSwapSelected()" [ngClass] = "{ 'bg-yellow-300': selectedAll[1]['swap']}" [disabled] = "disableArray[3]">
         <p>
             swap
         </p>
@@ -72,19 +72,19 @@
     <div class="w-20 h-20 rounded-[10px] bg-blue-500 row-start-1">
 
     </div>
-    <button class ="w-20 h-20 rounded-[10px] row-start-2 bg-gray-500 " (click) ="tetris()" [disabled] = "(baseGameService.spielerID == 1)">
+    <button class ="w-20 h-20 rounded-[10px] row-start-2 bg-gray-500 " (click) ="tetris()" [disabled] = "disableArray[0]">
         <p>
             Tetris
         </p>
 
     </button>
-    <button class = "w-20 h-20 rounded-[10px] row-start-3 bg-gray-500  "  (click)="changeBombSelected()" [ngClass] = "{ 'bg-yellow-300':selectedAll[0]['bomb'] }" [disabled] = "(baseGameService.spielerID == 1)">
+    <button class = "w-20 h-20 rounded-[10px] row-start-3 bg-gray-500  "  (click)="changeBombSelected()" [ngClass] = "{ 'bg-yellow-300':selectedAll[0]['bomb'] }" [disabled] = "disableArray[1]">
         <p>
             Bomb
         </p>
 
     </button>
-    <button class = "w-20 h-20 rounded-[10px] row-start-4 bg-gray-500" (click) = "changeSwapSelected()" [ngClass] = "{ 'bg-yellow-300': selectedAll[0]['swap'] }" [disabled] = "(baseGameService.spielerID == 1)">
+    <button class = "w-20 h-20 rounded-[10px] row-start-4 bg-gray-500" (click) = "changeSwapSelected()" [ngClass] = "{ 'bg-yellow-300': selectedAll[0]['swap'] }" [disabled] = "disableArray[2]">
         <p>
             swap
         </p>
@@ -92,4 +92,3 @@
     
 
 </div>
-

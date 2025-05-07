@@ -13,6 +13,11 @@ export class PartyComponent {
   constructor(private router: Router, public baseGameService: BasegameService ) {
 
   }
+  powerUpsBlue: string[] = ["bomb","swap","tetris"];
+  powerUpsRed: string[] = ["swap","tetris",];
+  powerUpsAll: string[][] = [this.powerUpsBlue,this.powerUpsRed]
+  disableArray : boolean []= [true,true,true,true,true,true]
+
   bombeSelcted :boolean = false;
   swapSelected:boolean = false;
   selectedBlau: { [key:string]: boolean } = {
@@ -28,30 +33,87 @@ export class PartyComponent {
 
   }
   selectedAll:any[]=[this.selectedBlau,this.selectedRot];
+  checkPowerUps(name: string, ID : number,activate: boolean){
+    console.log("iscalled")
+    
+    
+      for(let x=0;x<this.powerUpsAll[ID].length;x++){
+        if((this.powerUpsAll[ID])[x] == name){
+          
+          console.log(name,"=",(this.powerUpsAll[ID])[x],activate)
+          if(activate == true){
+            console.log("Power")
+            console.log(this.powerUpsAll[0]);
+            
+            (this.powerUpsAll[ID]).splice(x,1);
+            console.log(this.powerUpsAll[0]);
+            
+            
+            
+            
+           
+          }
+          return true;
+        }
+    
+      }
+      
+      return false;
+     
+        
+        
+  }
+  disableButton(){
+    this.disableArray[0] = (this.baseGameService.spielerID == 1|| !this.checkPowerUps("tetris",0,false))
+    this.disableArray[1] = (this.baseGameService.spielerID == 1|| !this.checkPowerUps("bomb",0,false))
+    this.disableArray[2] = (this.baseGameService.spielerID == 1 || !this.checkPowerUps("swap",0,false))
+    this.disableArray[3] = (this.baseGameService.spielerID == 0 || !this.checkPowerUps("tetris",1,false))
+    this.disableArray[4] = (this.baseGameService.spielerID == 0|| !this.checkPowerUps("bomb",1,false))
+    this.disableArray[5] = (this.baseGameService.spielerID == 0 || !this.checkPowerUps("swap",1,false))
+    console.log(this.checkPowerUps("swap",1,false),"returnb")
+    console.log("swap",1,false)
+    console.log(this.disableArray[4]);
+
+    
+
+  }
+      
+   
+
+  
   
 
   clickHandle(x,y){
+    
     if((this.selectedAll[this.baseGameService.spielerID])["bomb"] == true){
+      
       this.Bomb(y,x);
       this.resetSelected();
       this.baseGameService.gravityCheck();
+      console.log(this.baseGameService.spielerID)
+      this.disableButton()
       
       
       return;
     }
     if((this.selectedAll[this.baseGameService.spielerID])["swap"] == true){
+    
       this.swap(x,y)
       this.resetSelected();
       this.baseGameService.gravityCheck();
+      this.disableButton()
       return;
       
     }
     if((this.selectedAll[this.baseGameService.spielerID])["setBlock"]== true){
+      
       this.baseGameService.clicked(x,y);
       this.resetSelected();
       this.baseGameService.gravityCheck();
+      this.disableButton()
       return;
     }
+    
   }
 
   updateDropMode(){
@@ -65,6 +127,7 @@ export class PartyComponent {
 
   }
   resetSelected(){
+    this.updateDropMode();
     for(let index = 0; index<2;index++){
     let keys: string []
     keys =Object.keys(this.selectedAll[index])
@@ -100,15 +163,7 @@ export class PartyComponent {
     this.updateDropMode();
     
   }
-  removeBlock(x,y){
-    
-    for(let i= 0;i<this.baseGameService.allPlayerowned[0].length;i=i+2){
-      if((this.baseGameService.allPlayerowned[0])[i] == x && ((this.baseGameService.allPlayerowned[0])[i+1] == y )){
-        (this.baseGameService.allPlayerowned[0]).splice(i,2)
-        
-      }
-    }
-  }  
+
     
 
  
@@ -122,15 +177,17 @@ Bomb(yKoord:number,xKoord:number){
     for(let yadd = 0;yadd<3;yadd++){
       if ((xKoord+umliegende[xadd]>=0)&&(xKoord+umliegende[xadd]<=7)&&(yKoord+umliegende[yadd]>=0)&&(yKoord+umliegende[yadd]<=7)){
         this.baseGameService.Board[xKoord+umliegende[xadd]][yKoord+umliegende[yadd]] = 0;
-        this.removeBlock(xKoord+umliegende[xadd],yKoord+umliegende[yadd])
+        this.baseGameService.removeBlock(xKoord+umliegende[xadd],yKoord+umliegende[yadd])
+
         
 
         
       }
     }
   }
-  console.log(this.baseGameService.allPlayerowned[1],this.baseGameService.allPlayerowned[0])
+  
   this.baseGameService.changeSpielerID();
+  this.checkPowerUps("bomb",this.baseGameService.spielerID,true);
 }
 
 changeSwapSelected(){
@@ -158,6 +215,7 @@ swap(x,y){
     this.baseGameService.showWinScreen = true;
   }
   this.baseGameService.changeSpielerID();
+  this.checkPowerUps("swap",this.baseGameService.spielerID,true)
   
 }
 
@@ -171,14 +229,17 @@ tetris(){
         counter++;
         if (counter == 7){
           for(let x = 0;x<8;x++){
-            this.baseGameService.Board[x][y] =0;  
+            this.baseGameService.Board[x][y] =0; 
+            this.baseGameService.removeBlock(x,y); 
             }
           }
       }
     }
     }
     this.baseGameService.changeSpielerID(); 
+    this.checkPowerUps("tetris",this.baseGameService.spielerID,true,);
   } 
+
 
 
   

@@ -41,12 +41,18 @@ export class BasegameService {
             
             this.Board[x][y+1] = this.Board[x][y]
             this.Board[x][y] = 0;
-            this.gravityCheck()
+            this.removeBlock(x,y);
+            this.gravityCheck();
   
           }
         }
       }
     }
+    if((this.checkForWin(this.allPlayerowned,this.Board))==true){
+      console.log(this.allPlayerowned)
+      this.showWinScreen = true;
+    } 
+    
   }
    
   setNewBlock(spielerID:number,xKoord:number):void{
@@ -67,6 +73,18 @@ export class BasegameService {
       }
     }
   }
+  removeBlock(x,y){
+    for(let z = 0;z<2;z++){
+      
+    
+      for(let i= 0;i<this.allPlayerowned[0].length;i=i+2){
+        if((this.allPlayerowned[0])[i] == x && ((this.allPlayerowned[0])[i+1] == y )){
+          (this.allPlayerowned[0]).splice(i,2)
+          
+        }
+      }
+    }    
+  } 
   getmouseKoord(x: number,y: number):void{ //is called on mouseenter
     this.mousePos[0] = x;
     this.mousePos[1] = y;  
