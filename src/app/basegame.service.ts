@@ -197,10 +197,10 @@ export class BasegameService {
 
     if(x== hoverd[0] && y ==hoverd[1] && this.spielerID == 1 ){
       
-      return("bg-amber-800 opacity-50");
+      return("bg-amber-800 opacity-50 inset-ring-2");
     }
     if(x== hoverd[0] && y ==hoverd[1] && this.spielerID == 0 ){
-      return("bg-indigo-800 opacity-50");
+      return("bg-indigo-800 opacity-50 inset-ring-2");
       
       
     }

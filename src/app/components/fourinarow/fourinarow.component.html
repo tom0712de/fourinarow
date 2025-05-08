@@ -1,5 +1,6 @@
-<div class="flex justify-center ">    
-    <div  class = "relative top-10 min-h-0 inline-grid grid-cols-8 bg-neutral-500 p-5 rounded-t-xl shadow-xl inset-ring-sm ">
+<body class="bg-teal-900 h-screen">
+<div class="flex relative justify-center ">    
+    <div  class = "relative top-10 min-h-0 inline-grid grid-cols-8  bg-gradient-to-r from-slate-700 to-gray-900 p-5 rounded-t-xl shadow-xl inset-ring-sm ">
         <div *ngFor="let column of baseGameService.Board;let x = index">
             <div *ngFor="let row of column; let y = index">
                 
@@ -17,7 +18,7 @@
                 </button>
             </div>
         </div> 
-        <div *ngIf="baseGameService.showWinScreen"class ="absolute w-150 h-50 z-9 bg-stone-700/75 top-75  left-20 rounded-xl">
+        <div *ngIf="baseGameService.showWinScreen"class ="absolute w-150 h-50 z-9 bg-stone-700/75 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-xl">
             <p class = "textclass">
                 {{baseGameService.text}} hat gewonnen !!!
 
@@ -46,6 +47,8 @@
     </div>    
    
 </div> 
+</body>
+
 
 
 

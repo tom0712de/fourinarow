@@ -1,21 +1,46 @@
-<div class = "h1">
-    <h1 class ="text-4xl font-extrabold drop-shadow-lg ">
-        Viergewinnt
-    </h1>
-</div >
+<div class="flex flex-col bg-teal-950 h-screen ">    
+    <div class = "h1 my-5">
+        <h1 class ="italic text-4xl font-extrabold drop-shadow-lg text-amber-500 ">
+            Viergewinnt
+        </h1>
+    </div >
+    <div class="flex relative items-center justify-center  ">    
+        <div  class = "  min-h-0 inline-grid grid-cols-8 bg-gradient-to-r from-slate-700 to-gray-900 p-5 rounded-t-xl shadow-xl inset-ring-sm my-5 backdrop-blur">
+            <div *ngFor="let column of baseGameService.Board;let x = index">
+                <div *ngFor="let row of column; let y = index">
+                    
+                    <button
 
-<div class = "btnBox ">    
-    <button (click) = "startGame()" class = "bg-stone-400 w-75 h-25 rounded-xl m-10 top-20"  >
-        <p>
-            Normales Spiel
-        </p>
+                        
+                        class=" rounded-full w-15 h-15 m-1 bg-white" 
+                        [style.grid-column]="y"
+                        [style.grid-row]="x"
+                        [ngClass]="getRandomClass()" 
+                        >
+                    
 
-        
-    </button>
-    <button class ="bg-stone-400 w-75 h-25 rounded-xl m-10" (click) = "party()">
-        <p>
-            PartyModus
-        </p>
-        
-    </button>
-</div>
+                    
+                    </button>
+                </div>
+            </div> 
+
+        </div>    
+    
+    </div> 
+
+    <div class = "btnBox my-5 ">    
+        <button (click) = "startGame()" class = "bg-gradient-to-r from-indigo-800 to-gray-900  w-75 h-25 rounded-xl m-10 top-20"  >
+            <p class = "italic text-amber-500 text-xl">
+                Normales Spiel
+            </p>
+
+            
+        </button>
+        <button class ="bg-gradient-to-r from-indigo-800 to-gray-900 w-75 h-25 rounded-xl m-10" (click) = "party()">
+            <p class = "italic text-amber-500 text-xl">
+                PartyModus
+            </p>
+            
+        </button>
+    </div>
+</div>    
