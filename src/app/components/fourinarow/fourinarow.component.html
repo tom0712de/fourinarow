@@ -19,21 +19,21 @@
             </div>
         </div> 
         <div *ngIf="baseGameService.showWinScreen"class ="absolute w-150 h-50 z-9 bg-stone-700/75 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-xl">
-            <p class = "textclass">
+            <p class = "text-zinc-200  text-4xl text-center">
                 {{baseGameService.text}} hat gewonnen !!!
 
             </p>
             <div class = "menuDiv">
-                <button (click) = "baseGameService.reset()" class = "rounded-xl bg-red-600 m-5 bg-opacity-100 h-20 w-50 z-10">
-                    <p class = "textclass">
+                <button (click) = "baseGameService.reset()" class = "rounded-xl  bg-radial from-indigo-800 to-gray-900 m-5 bg-opacity-100 h-20 w-50 z-10 shadow-xl">
+                    <p class = "text-amber-500 italic text-2xl">
                         Neues Spiel
 
                     </p>
 
                 </button>
-                <button (click) = "baseGameService.goMenu()" class = "rounded-xl bg-red-600 m-5 bg-opacity-100 h-20 w-50 z-10 ">
-                    <p class = "textclass">
-                        Hauptmenu
+                <button (click) = "baseGameService.goMenu()" class = "rounded-xl  bg-radial from-indigo-800 to-gray-900 m-5 bg-opacity-100 h-20 w-50 z-10 ">
+                    <p class = "text-amber-500 italic text-2xl">
+                        Hauptmenü
 
                     </p>
 

@@ -14,6 +14,7 @@ export class PartyComponent {
    
 
   }
+  
   powerUpsBlue: string[] = ["bomb","swap","tetris"];
   powerUpsRed: string[] = ["swap","tetris","bomb"];
 
@@ -34,7 +35,15 @@ export class PartyComponent {
     setBlock: true,
 
   }
+
   selectedAll:any[]=[this.selectedBlau,this.selectedRot];
+  setPowerUp(){
+    this.powerUpsBlue = ["bomb","swap","tetris"];
+    this.powerUpsRed = ["swap","tetris","bomb"];
+  
+    this.powerUpsAll = [this.powerUpsBlue,this.powerUpsRed]
+
+  }
   hasPowerUp(name: string, ID: number): boolean {
     
     return this.powerUpsAll[ID]?.includes(name);
@@ -118,6 +127,8 @@ export class PartyComponent {
     }
 
   }
+
+
   resetSelected(){
     this.updateDropMode();
     for(let index = 0; index<2;index++){
@@ -248,6 +259,15 @@ tetris(){
       this.baseGameService.gravityCheck();
   }
   } 
+  resetGame(){
+    this.baseGameService.reset()
+    this.setPowerUp()
+  }
+  Menu(){
+    this.setPowerUp()
+    this.baseGameService.goMenu()
+    
+  }
 
 
 

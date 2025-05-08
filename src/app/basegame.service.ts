@@ -18,6 +18,7 @@ export class BasegameService {
   allPlayerowned:number[][] =[this.player1owned,this.player2owned]
   mousePos : number [] = [1,1]
   dropMode : boolean= true;
+ 
 
 
 
@@ -69,6 +70,7 @@ export class BasegameService {
         let yKoord:number = i
         this.Board[xKoord][yKoord] = spielerID+1
         this.allPlayerowned[spielerID].push(xKoord,yKoord)
+     
         break;
       }
     }

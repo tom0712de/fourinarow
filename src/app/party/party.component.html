@@ -2,22 +2,22 @@
 <body class="bg-teal-950 h-screen">
 <div class = "flex justify-center items-center ">
 <div class = "flex flex-col h-full mx-10 gap-3 justify-center h-screen ">
-        <div class="w-30 h-30 rounded-[10px] bg-gradient-to-b from-amber-700 to-amber-800 row-start-1">
+        <div class="w-30 h-30 rounded-[10px] bg-gradient-to-b from-amber-700 to-amber-800 row-start-1 shadow-xl border-2 border-black ">
 
         </div>
-        <button *ngIf ="hasPowerUp('tetris',1)" class ="w-30 h-30 rounded-xl  row-start-2 bg-gradient-to-r from-indigo-800 to-gray-900 " (click) = "tetris()" [disabled] = "disableArray[5]">
+        <button *ngIf ="hasPowerUp('tetris',1)" class ="w-30 h-30 rounded-xl  row-start-2 bg-radial from-indigo-800 to-gray-900  shadow-xl  " (click) = "tetris()" [disabled] = "disableArray[5]">
             <p class="italic text-amber-500 text-xl">
                 Tetris
             </p>
 
         </button>
-        <button *ngIf ="hasPowerUp('bomb',1)"  class = "w-30 h-30 rounded-xl row-start-3 bg-gradient-to-r from-indigo-800 to-gray-900 "  (click)="changeBombSelected()" [ngClass] = "{ 'bg-gray-300 inset-shadow-sm inset-ring-2 shadow-black': selectedAll[1]['bomb']}" [disabled] = "disableArray[4]">
+        <button *ngIf ="hasPowerUp('bomb',1)"  class = "w-30 h-30 rounded-xl row-start-3 bg-radial from-indigo-800 to-gray-900 shadow-xl "  (click)="changeBombSelected()" [ngClass] = "{ 'bg-gray-300 inset-shadow-sm inset-ring-2 shadow-black': selectedAll[1]['bomb']}" [disabled] = "disableArray[4]">
             <p class="italic text-amber-500 text-xl" >
                 Bomb
             </p>
 
         </button>
-        <button *ngIf ="hasPowerUp('swap',1)"  class = "w-30 h-30 bg-gradient-to-r from-indigo-800 to-gray-900 rounded-xl row-start-4 bg-gray-500" (click) = "changeSwapSelected()" [ngClass] = "{ 'bg-gray-300 inset-shadow-sm inset-ring-2 shadow-black': selectedAll[1]['swap']}" [disabled] = "disableArray[3]">
+        <button *ngIf ="hasPowerUp('swap',1)"  class = "w-30 h-30 bg-radial from-indigo-800 to-gray-900 rounded-xl row-start-4 bg-gray-500 shadow-xl" (click) = "changeSwapSelected()" [ngClass] = "{ 'bg-gray-300 inset-shadow-sm inset-ring-2 shadow-black': selectedAll[1]['swap']}" [disabled] = "disableArray[3]">
             <p class="italic text-amber-500 text-xl">
                 swap
             </p>
@@ -48,20 +48,20 @@
                 </div>
             </div> 
             <div *ngIf="baseGameService.showWinScreen"class ="absolute w-150 h-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-9 bg-stone-700/75  rounded-xl">
-                <p class = "textclass">
+                <p class = "text-zinc-200  text-4xl text-center">
                     {{baseGameService.text}} hat gewonnen !!!
 
                 </p>
                 <div class = "menuDiv">
-                    <button (click) = "baseGameService.reset()" class = "rounded-xl bg-red-600 m-5 bg-opacity-100 h-20 w-50 z-10">
-                        <p class = "textclass">
+                    <button (click) = "resetGame()" class = "rounded-xl  m-5 bg-opacity-100 h-20 w-50 z-10 bg-radial from-indigo-800 to-gray-900">
+                        <p class = "text-amber-500 italic text-2xl">
                             Neues Spiel
 
                         </p>
 
                     </button>
-                    <button (click) = "baseGameService.goMenu()" class = "rounded-xl bg-red-600 m-5 bg-opacity-100 h-20 w-50 z-10 ">
-                        <p class = "textclass">
+                    <button (click) = "Menu()" class = "rounded-xl  m-5 bg-opacity-100 h-20 w-50 z-10 bg-radial from-indigo-800 to-gray-900 ">
+                        <p class = "text-amber-500 italic text-2xl">
                             Hauptmenu
 
                         </p>
@@ -76,23 +76,23 @@
         </div>
  </div>    
 
- <div class = "flex flex-col h-full p-2 gap-2 justify-center h-screen ">
-        <div class="w-30 h-30 rounded-[10px] bg-gradient-to-b from-indigo-800 to-indigo-900 row-start-1">
+ <div class = "flex flex-col h-full mx-10 gap-3 justify-center h-screen ">
+        <div class="w-30 h-30 rounded-[10px] bg-gradient-to-b from-indigo-800 to-indigo-900 row-start-1 shadow-xl  border-2 border-black">
 
         </div>
-        <button *ngIf = "hasPowerUp('tetris',0)"  class ="w-30 h-30 bg-gradient-to-r from-indigo-800 to-gray-900 rounded-xl row-start-4 bg-gray-500 " (click) ="tetris()" [disabled] = "disableArray[0]">
+        <button *ngIf = "hasPowerUp('tetris',0)"  class ="w-30 h-30 bg-radial from-indigo-800 to-gray-900  rounded-xl row-start-4 bg-gray-500 shadow-xl " (click) ="tetris()" [disabled] = "disableArray[0]">
             <p  class = "italic text-amber-500 text-xl" >
                 Tetris
             </p>
 
         </button>
-        <button *ngIf = "hasPowerUp('bomb',0)" class = "w-30 h-30 bg-gradient-to-r from-indigo-800 to-gray-900 rounded-xl row-start-4 bg-gray-500 "  (click)="changeBombSelected()" [ngClass] = "{ 'bg-gray-300 inset-shadow-sm inset-ring-2 shadow-black':selectedAll[0]['bomb'] }" [disabled] = "disableArray[1]">
+        <button *ngIf = "hasPowerUp('bomb',0)" class = "w-30 h-30 bg-radial from-indigo-800 to-gray-900  rounded-xl row-start-4 bg-gray-500 shadow-xl "  (click)="changeBombSelected()" [ngClass] = "{ 'bg-gray-300 inset-shadow-sm inset-ring-2 shadow-black':selectedAll[0]['bomb'] }" [disabled] = "disableArray[1]">
             <p class = "italic text-amber-500 text-xl" >
                 Bomb
             </p>
 
         </button>
-        <button *ngIf = "hasPowerUp('swap',0)" class = "w-30 h-30 bg-gradient-to-r from-indigo-800 to-gray-900 rounded-xl row-start-4 bg-gray-500" (click) = "changeSwapSelected()" [ngClass] = "{ 'bg-gray-300 inset-shadow-sm inset-ring-2 shadow-black': selectedAll[0]['swap'] }" [disabled] = "disableArray[2]">
+        <button *ngIf = "hasPowerUp('swap',0)" class = "w-30 h-30 bg-radial from-indigo-800 to-gray-900 shadow-xl rounded-xl row-start-4 bg-gray-500" (click) = "changeSwapSelected()" [ngClass] = "{ 'bg-gray-300 inset-shadow-sm inset-ring-2 shadow-black': selectedAll[0]['swap'] }" [disabled] = "disableArray[2]">
             <p class = "italic text-amber-500 text-xl">
                 swap
             </p>
