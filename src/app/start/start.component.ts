@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { BasegameService } from '../basegame.service';
 
 @Component({
   selector: 'app-start',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './start.component.scss'
 })
 export class StartComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router,public baseGameService: BasegameService,) {}
   startGame(){
     this.router.navigate(["/game"]);
   }

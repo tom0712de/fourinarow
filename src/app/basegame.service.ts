@@ -49,7 +49,7 @@ export class BasegameService {
       }
     }
     if((this.checkForWin(this.allPlayerowned,this.Board))==true){
-      console.log(this.allPlayerowned)
+      
       this.showWinScreen = true;
     } 
     
@@ -74,16 +74,29 @@ export class BasegameService {
     }
   }
   removeBlock(x,y){
-    for(let z = 0;z<2;z++){
-      
     
-      for(let i= 0;i<this.allPlayerowned[0].length;i=i+2){
-        if((this.allPlayerowned[0])[i] == x && ((this.allPlayerowned[0])[i+1] == y )){
-          (this.allPlayerowned[0]).splice(i,2)
-          
+      for(let z = 0;z<2;z++){
+        
+      
+        for(let i= 0;i<this.allPlayerowned[0].length;i=i+2){
+          if((this.allPlayerowned[0])[i] == x && ((this.allPlayerowned[0])[i+1] == y )){
+            (this.allPlayerowned[0]).splice(i,2)
+            console.log(x,y)
+            
+          }
         }
       }
-    }    
+      for(let z = 0;z<2;z++){
+        
+      
+        for(let i= 0;i<this.allPlayerowned[1].length;i=i+2){
+          if((this.allPlayerowned[1])[i] == x && ((this.allPlayerowned[1])[i+1] == y )){
+            (this.allPlayerowned[1]).splice(i,2)
+            console.log(x,y)
+            
+          }
+        }
+      }     
   } 
   getmouseKoord(x: number,y: number):void{ //is called on mouseenter
     this.mousePos[0] = x;
@@ -175,23 +188,25 @@ export class BasegameService {
     
     if(this.Board[x][y]==1){
       
-      return("blue");
+      return("bg-gradient-to-b from-indigo-800 to-indigo-900 shadow-md inset-ring-2 ");
     }
     else if(this.Board[x][y]==2){
-      return(("red"))
+      return(("bg-gradient-to-b from-amber-700 to-amber-800 shadow-md inset-ring-2"))
     }
 
 
     if(x== hoverd[0] && y ==hoverd[1] && this.spielerID == 1 ){
-      return("hoverRed")
+      
+      return("bg-amber-800 opacity-50");
     }
     if(x== hoverd[0] && y ==hoverd[1] && this.spielerID == 0 ){
+      return("bg-indigo-800 opacity-50");
       
-      return("hoverBlue");
+      
     }
     if((x!= hoverd[0] ||  y !=hoverd[1])&& (this.Board[x][y]==0)) {
       
-      return("rounded-full bg-white");
+      return("rounded-full bg-white inset-shadow-sm ");
      
     }
       else{
@@ -220,7 +235,7 @@ export class BasegameService {
       this.setNewBlock(this.spielerID,xKoord);
       this.changeSpielerID();
       if((this.checkForWin(this.allPlayerowned,this.Board))==true){
-        console.log(this.allPlayerowned)
+        
         this.showWinScreen = true;
       } 
       return;   

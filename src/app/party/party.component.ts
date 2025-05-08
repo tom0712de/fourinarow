@@ -11,10 +11,12 @@ import { BasegameService } from '../basegame.service';
 })
 export class PartyComponent {
   constructor(private router: Router, public baseGameService: BasegameService ) {
+   
 
   }
   powerUpsBlue: string[] = ["bomb","swap","tetris"];
-  powerUpsRed: string[] = ["swap","tetris",];
+  powerUpsRed: string[] = ["swap","tetris","bomb"];
+
   powerUpsAll: string[][] = [this.powerUpsBlue,this.powerUpsRed]
   disableArray : boolean []= [true,true,true,true,true,true]
 
@@ -33,46 +35,35 @@ export class PartyComponent {
 
   }
   selectedAll:any[]=[this.selectedBlau,this.selectedRot];
+  hasPowerUp(name: string, ID: number): boolean {
+    
+    return this.powerUpsAll[ID]?.includes(name);
+    
+  }
   checkPowerUps(name: string, ID : number,activate: boolean){
-    console.log("iscalled")
-    
-    
       for(let x=0;x<this.powerUpsAll[ID].length;x++){
-        if((this.powerUpsAll[ID])[x] == name){
-          
-          console.log(name,"=",(this.powerUpsAll[ID])[x],activate)
+        if((this.powerUpsAll[ID])[x] === name){
           if(activate == true){
-            console.log("Power")
-            console.log(this.powerUpsAll[0]);
-            
-            (this.powerUpsAll[ID]).splice(x,1);
-            console.log(this.powerUpsAll[0]);
-            
-            
-            
-            
+            (this.powerUpsAll[ID]).splice(x,1);      
            
           }
+          
           return true;
         }
     
       }
       
-      return false;
-     
-        
-        
+      
+      return false;         
   }
   disableButton(){
-    this.disableArray[0] = (this.baseGameService.spielerID == 1|| !this.checkPowerUps("tetris",0,false))
-    this.disableArray[1] = (this.baseGameService.spielerID == 1|| !this.checkPowerUps("bomb",0,false))
-    this.disableArray[2] = (this.baseGameService.spielerID == 1 || !this.checkPowerUps("swap",0,false))
-    this.disableArray[3] = (this.baseGameService.spielerID == 0 || !this.checkPowerUps("tetris",1,false))
-    this.disableArray[4] = (this.baseGameService.spielerID == 0|| !this.checkPowerUps("bomb",1,false))
-    this.disableArray[5] = (this.baseGameService.spielerID == 0 || !this.checkPowerUps("swap",1,false))
-    console.log(this.checkPowerUps("swap",1,false),"returnb")
-    console.log("swap",1,false)
-    console.log(this.disableArray[4]);
+    this.disableArray[0] = (this.baseGameService.spielerID == 1|| !this.hasPowerUp("tetris",0))
+    this.disableArray[1] = (this.baseGameService.spielerID == 1|| !this.hasPowerUp("bomb",0))
+    this.disableArray[2] = (this.baseGameService.spielerID == 1 || !this.hasPowerUp("swap",0))
+    this.disableArray[3] = (this.baseGameService.spielerID == 0 ||  !this.hasPowerUp("tetris",1))
+    this.disableArray[4] = (this.baseGameService.spielerID == 0|| !this.hasPowerUp("bomb",1))
+    this.disableArray[5] = (this.baseGameService.spielerID == 0 || !this.hasPowerUp("swap",1))
+   
 
     
 
@@ -84,13 +75,14 @@ export class PartyComponent {
   
 
   clickHandle(x,y){
+  
     
     if((this.selectedAll[this.baseGameService.spielerID])["bomb"] == true){
       
       this.Bomb(y,x);
       this.resetSelected();
       this.baseGameService.gravityCheck();
-      console.log(this.baseGameService.spielerID)
+      
       this.disableButton()
       
       
@@ -147,21 +139,22 @@ export class PartyComponent {
   
 
   changeBombSelected(){
+    if(this.hasPowerUp("bomb",this.baseGameService.spielerID)){
     
-    if ((this.selectedAll[this.baseGameService.spielerID])["bomb"] == true){
-      (this.selectedAll[this.baseGameService.spielerID])["bomb"] = false;
-      (this.selectedAll[this.baseGameService.spielerID])["setBlock"] = true;
-    }
-    else{
-      let keys: string []
-      keys =Object.keys(this.selectedAll[this.baseGameService.spielerID])
-      for(let i = 0;i<keys.length;i++){
-        (this.selectedAll[this.baseGameService.spielerID])[keys[i]] = false;
+      if ((this.selectedAll[this.baseGameService.spielerID])["bomb"] == true){
+        (this.selectedAll[this.baseGameService.spielerID])["bomb"] = false;
+        (this.selectedAll[this.baseGameService.spielerID])["setBlock"] = true;
       }
-      (this.selectedAll[this.baseGameService.spielerID])["bomb"] = true;
-    }
-    this.updateDropMode();
-    
+      else{
+        let keys: string []
+        keys =Object.keys(this.selectedAll[this.baseGameService.spielerID])
+        for(let i = 0;i<keys.length;i++){
+          (this.selectedAll[this.baseGameService.spielerID])[keys[i]] = false;
+        }
+        (this.selectedAll[this.baseGameService.spielerID])["bomb"] = true;
+      }
+      this.updateDropMode();
+    }      
   }
 
     
@@ -170,7 +163,7 @@ export class PartyComponent {
  
  
 Bomb(yKoord:number,xKoord:number){
-  console.log(this.baseGameService.allPlayerowned[1],this.baseGameService.allPlayerowned[0])
+ 
   const umliegende:number [] = [-1,0,1];
   this.bombeSelcted = false;
   for(let xadd = 0;xadd<3;xadd++){
@@ -185,59 +178,75 @@ Bomb(yKoord:number,xKoord:number){
       }
     }
   }
+  this.checkPowerUps("bomb",this.baseGameService.spielerID,true);
   
   this.baseGameService.changeSpielerID();
-  this.checkPowerUps("bomb",this.baseGameService.spielerID,true);
+  
 }
 
 changeSwapSelected(){
+  if(this.hasPowerUp("swap",this.baseGameService.spielerID)){
 
-  if ((this.selectedAll[this.baseGameService.spielerID])["swap"] == true){
-    (this.selectedAll[this.baseGameService.spielerID])["swap"] = false;
-    (this.selectedAll[this.baseGameService.spielerID])["setBlock"] = true;
-  }
-  else{
-    let keys: string []
-
-    keys =Object.keys(this.selectedAll[this.baseGameService.spielerID])
-    for(let i = 0;i<keys.length;i++){
-      (this.selectedAll[this.baseGameService.spielerID])[keys[i]] = false;
+    if ((this.selectedAll[this.baseGameService.spielerID])["swap"] == true){
+      (this.selectedAll[this.baseGameService.spielerID])["swap"] = false;
+      (this.selectedAll[this.baseGameService.spielerID])["setBlock"] = true;
     }
-    (this.selectedAll[this.baseGameService.spielerID])["swap"] = true;
-  } 
-  this.updateDropMode(); 
+    else{
+      let keys: string []
+
+      keys =Object.keys(this.selectedAll[this.baseGameService.spielerID])
+      for(let i = 0;i<keys.length;i++){
+        (this.selectedAll[this.baseGameService.spielerID])[keys[i]] = false;
+      }
+      (this.selectedAll[this.baseGameService.spielerID])["swap"] = true;
+    } 
+    this.updateDropMode(); 
+  }  
 }
 swap(x,y){
+
   
   this.baseGameService.Board[x][y] = this.baseGameService.spielerID+1
-  console.log(this.baseGameService.Board[x][y]);
+  
+  this.baseGameService.removeBlock(x,y);
+  
+  this.baseGameService.allPlayerowned[this.baseGameService.spielerID].push(x,y)
+ 
+
+  
   if(this.baseGameService.checkForWin(this.baseGameService.allPlayerowned, this.baseGameService.Board) == true){
     this.baseGameService.showWinScreen = true;
   }
-  this.baseGameService.changeSpielerID();
   this.checkPowerUps("swap",this.baseGameService.spielerID,true)
+  this.baseGameService.changeSpielerID();
+  
   
 }
 
 tetris(){
-  this.baseGameService.changeSpielerID() 
-  let counter:number = 0;
-  for(let y = 0;y<8;y++){
-    counter = 0;
-    for(let x = 0;x<8;x++){ 
-      if (this.baseGameService.Board[x][y] != 0){
-        counter++;
-        if (counter == 7){
-          for(let x = 0;x<8;x++){
-            this.baseGameService.Board[x][y] =0; 
-            this.baseGameService.removeBlock(x,y); 
+  if(this.hasPowerUp("tetris",this.baseGameService.spielerID)){
+
+    
+    let counter:number = 0;
+    for(let y = 0;y<8;y++){
+      counter = 0;
+      for(let x = 0;x<8;x++){ 
+        if (this.baseGameService.Board[x][y] != 0){
+          counter++;
+          if (counter == 7){
+            for(let x = 0;x<8;x++){
+              this.baseGameService.Board[x][y] =0; 
+              this.baseGameService.removeBlock(x,y); 
+              }
             }
-          }
+        }
       }
-    }
-    }
-    this.baseGameService.changeSpielerID(); 
-    this.checkPowerUps("tetris",this.baseGameService.spielerID,true,);
+      }
+      this.checkPowerUps("tetris",this.baseGameService.spielerID,true,);
+     
+      this.baseGameService.changeSpielerID(); 
+      this.baseGameService.gravityCheck();
+  }
   } 
 
 
