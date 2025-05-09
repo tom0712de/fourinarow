@@ -214,23 +214,24 @@ changeSwapSelected(){
     this.updateDropMode(); 
   }  
 }
-swap(x,y){
+swap(x:number,y:number ){
+  if(this.baseGameService.Board[x][y] != 0 && this.baseGameService.Board[x][y] != this.baseGameService.spielerID +1){
 
   
-  this.baseGameService.Board[x][y] = this.baseGameService.spielerID+1
+    this.baseGameService.Board[x][y] = this.baseGameService.spielerID+1
+    
+    this.baseGameService.removeBlock(x,y);
+    
+    this.baseGameService.allPlayerowned[this.baseGameService.spielerID].push(x,y)
   
-  this.baseGameService.removeBlock(x,y);
-  
-  this.baseGameService.allPlayerowned[this.baseGameService.spielerID].push(x,y)
- 
 
-  
-  if(this.baseGameService.checkForWin(this.baseGameService.allPlayerowned, this.baseGameService.Board) == true){
-    this.baseGameService.showWinScreen = true;
+    
+    if(this.baseGameService.checkForWin(this.baseGameService.allPlayerowned, this.baseGameService.Board) == true){
+      this.baseGameService.showWinScreen = true;
+    }
+    this.checkPowerUps("swap",this.baseGameService.spielerID,true)
+    this.baseGameService.changeSpielerID();
   }
-  this.checkPowerUps("swap",this.baseGameService.spielerID,true)
-  this.baseGameService.changeSpielerID();
-  
   
 }
 
