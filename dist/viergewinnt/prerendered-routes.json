@@ -1,0 +1,7 @@
+{
+  "routes": {
+    "/fourinarow": {},
+    "/fourinarow/game": {},
+    "/fourinarow/party": {}
+  }
+}
