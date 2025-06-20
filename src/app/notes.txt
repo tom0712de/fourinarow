@@ -1,0 +1,13 @@
+shits cooked
+     <button class="bg-radial from-indigo-800 to-gray-900  w-75 h-25 rounded-xl m-10 top-20 shadow-xl">
+            <p>
+                <input type="text" id="id" [(ngModel)]="id"/>
+            </p>
+            
+
+        </button>
+        <button (click)="confirmBtn()" class="bg-radial from-indigo-800 to-gray-900  w-75 h-25 rounded-xl m-10 top-20 shadow-xl">
+            <p>
+                confirm
+            </p>
+        </button>

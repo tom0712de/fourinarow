@@ -1,0 +1,75 @@
+<body class="bg-teal-950 h-screen">
+<div class="flex flex-col grow-0 justify-center "> 
+    <div class="top-5 flex  relative justify-center ">
+        <h1 class="  italic text-4xl font-extrabold drop-shadow-lg text-amber-500">
+            Viergewinnt
+
+        </h1>
+       
+    </div> 
+    <div class="flex justify-center  m-7">
+        <div class="outline-1 outline-gray-700 w-150 rounded-full h-15 flex  flex-col place-items-center">
+            <h1 class="italic text-2xl font-extrabold drop-shadow-lg top-10 row-1" [ngClass]="getTextClass()">
+                Spieler: {{this.globalVarService.getPlayer()}}
+            </h1>
+            <h1 class="italic text-2xl font-extrabold drop-shadow-lg text-amber-500">
+                GameID: {{this.globalVarService.getID()}}
+            </h1>
+
+        </div>
+    </div>
+
+    <div class="flex justify-center  flex-row">
+  
+    <div  class = "flex absolute  min-h-0 inline-grid grid-cols-8  bg-gradient-to-r from-slate-700 to-gray-900 p-5 rounded-t-xl shadow-xl inset-ring-sm outline-gray-700 outline-1 ">
+        <div *ngFor="let column of baseGameService.Board;let x = index">
+            <div *ngFor="let row of column; let y = index">
+                
+                <button
+
+                    (click)="onClick(x,y)"
+                    class=" rounded-full w-20 h-20 m-1 " 
+                    [style.grid-column]="y"
+                    [style.grid-row]="x"
+                    [ngClass]="baseGameService.getPlayerClass(x,y)" 
+                    (mouseenter) = "baseGameService.getmouseKoord(x,y)" 
+                    [disabled] = "isDisabled ">
+
+                
+                </button>
+            </div>
+        </div> 
+
+        <div *ngIf="showWinScreen"class ="absolute w-150 h-50 z-9 bg-stone-700/75 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-xl">
+            <p class = "text-zinc-200  text-4xl text-center">
+                {{baseGameService.text}} hat gewonnen !!!
+
+            </p>
+            <div class = "menuDiv">
+                <button (click) = "newGame()" class= "rounded-xl  bg-radial from-indigo-800 to-gray-900 m-5 bg-opacity-100 h-20 w-50 z-10 shadow-xl">
+                    <p class = "text-amber-500 italic text-2xl">
+                        New Game
+
+                    </p>
+
+                </button>
+                <button (click) = "baseGameService.goMenu()" class = "rounded-xl  bg-radial from-indigo-800 to-gray-900 m-5 bg-opacity-100 h-20 w-50 z-10 ">
+                    <p class = "text-amber-500 italic text-2xl">
+                        Hauptmenü
+
+                    </p>
+
+                </button>
+            </div>    
+            
+
+
+
+        </div>
+    </div> 
+    </div>   
+   
+</div> 
+
+
+</body>

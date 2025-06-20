@@ -18,6 +18,9 @@ export class StartComponent {
     this.router.navigate(["/party"]);
 
   }
+  online(){
+    this.router.navigate(["/online-login"])
+  }
   getRandomClass():string{
     let temp:number
     temp = Math.floor(Math.random() * (2 - 0 + 1)) + 0; ;

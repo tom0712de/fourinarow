@@ -199,10 +199,10 @@ export class BasegameService {
 
     if(x== hoverd[0] && y ==hoverd[1] && this.spielerID == 1 ){
       
-      return("bg-amber-800 opacity-50 inset-ring-2");
+      return("bg-gradient-to-b from-amber-700 to-amber-800 opacity-50 inset-ring-2");
     }
     if(x== hoverd[0] && y ==hoverd[1] && this.spielerID == 0 ){
-      return("bg-indigo-800 opacity-50 inset-ring-2");
+      return("bg-gradient-to-b from-indigo-800 to-indigo-900 opacity-50 inset-ring-2");
       
       
     }
@@ -264,6 +264,33 @@ goMenu(){
 this.reset()
  this.router.navigate(["/"]);
 
+}
+getShowWinscreen(){
+  return this.showWinScreen;
+}
+getBoard(){
+  return this.Board;
+}
+getWichTurn(){
+  if(this.spielerID == 0){
+    return ("blau");
+  }
+  else{
+    return ("rot")
+  }
+}
+setWichTurn(pWichturn:string){// 0 = blau 1 = rot
+  if (pWichturn == "blau"){
+    this.spielerID = 0;
+
+  }
+  else{
+    this.spielerID = 1;
+  }
+
+}
+setBoard(pBoard:number[][]){
+  this.Board = pBoard;
 }
 
 }
