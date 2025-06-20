@@ -1,4 +1,4 @@
-<div class="flex flex-col bg-teal-950 h-screen ">    
+<div class="flex flex-col bg-teal-950 overflow-auto h-screen  items-center">    
     <div class = "h1 my-5">
         <h1 class ="italic text-4xl font-extrabold drop-shadow-lg text-amber-500 ">
             Viergewinnt
@@ -28,15 +28,15 @@
     
     </div> 
 
-    <div class = "btnBox my-5 ">    
-        <button (click) = "startGame()" class = "bg-radial from-indigo-800 to-gray-900  w-75 h-25 rounded-xl m-10 top-20 shadow-xl"  >
+    <div class = " my-5 ">    
+        <button (click) = "startGame()" class = "bg-radial from-slate-700 to-gray-900  w-75 h-25 rounded-xl m-10 top-0 shadow-xl"  >
             <p class = "italic text-amber-500 text-xl">
                 Normales Spiel
             </p>
 
             
         </button>
-        <button class ="bg-radial from-indigo-800 to-gray-900 w-75 h-25 rounded-xl m-10 shadow-xl" (click) = "party()">
+        <button class ="bg-radial from-slate-700 to-gray-900 w-75 h-25 rounded-xl m-10 shadow-xl" (click) = "party()">
             <p class = "italic text-amber-500 text-xl">
                 PartyModus
             </p>
