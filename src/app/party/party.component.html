@@ -5,7 +5,7 @@
         <div class="w-30 h-30 rounded-[10px] bg-gradient-to-b from-amber-700 to-amber-800 row-start-1 shadow-xl border-2 border-black ">
 
         </div>
-        <button *ngIf ="hasPowerUp('tetris',1)" class ="w-30 h-30 rounded-xl  row-start-2 bg-radial from-slate-700 to-gray-900  shadow-xl  " (click) = "tetris()" [disabled] = "disableArray[5]">
+        <button *ngIf ="hasPowerUp('tetris',1)" class ="w-30 h-30 rounded-xl  row-start-2 bg-radial from-slate-700 to-gray-900  shadow-xl  " (click) = "tetris()" [disabled] = "disableArray[3]">
             <p class="italic text-amber-500 text-xl">
                 Tetris
             </p>
@@ -17,7 +17,7 @@
             </p>
 
         </button>
-        <button *ngIf ="hasPowerUp('swap',1)"  class = "w-30 h-30 bg-radial from-slate-700 to-gray-900 rounded-xl row-start-4 shadow-xl" (click) = "changeSwapSelected()" [ngClass] = "{ 'bg-gray-300 inset-shadow-sm inset-ring-2 shadow-black': selectedAll[1]['swap']}" [disabled] = "disableArray[3]">
+        <button *ngIf ="hasPowerUp('swap',1)"  class = "w-30 h-30 bg-radial from-slate-700 to-gray-900 rounded-xl row-start-4 shadow-xl" (click) = "changeSwapSelected()" [ngClass] = "{ 'bg-gray-300 inset-shadow-sm inset-ring-2 shadow-black': selectedAll[1]['swap']}" [disabled] = "disableArray[5]">
             <p class="italic text-amber-500 text-xl">
                 swap
             </p>

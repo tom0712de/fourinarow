@@ -7,8 +7,9 @@ import { APImasterService } from '../apimaster.service';
 import { Gamestate } from '../gamestate';
 import { GlobalVarService } from '../global-var.service';
 import { Console, error } from 'node:console';
-import { ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef,NgZone } from '@angular/core';
 import { interval } from 'rxjs';
+import { Subscription,  Observable } from 'rxjs';
 
 @Component({
   selector: 'app-online',
@@ -19,16 +20,14 @@ import { interval } from 'rxjs';
 export class OnlineComponent implements AfterViewInit{
   isDisabled:boolean = true;
   
-  constructor(private router: Router,public baseGameService: BasegameService,private http: HttpClient,public cdr: ChangeDetectorRef, public apimasterService: APImasterService,public globalVarService: GlobalVarService){
+  constructor(private router: Router,public baseGameService: BasegameService,private http: HttpClient ,private ngZone: NgZone,public cdr: ChangeDetectorRef, public apimasterService: APImasterService,public globalVarService: GlobalVarService){
   
 
   
   }
   isDead:boolean = false;
-  source = interval(1000);
-  poll = this.source.subscribe(()=>{ 
-    if(!this.isDead){
-    this.sync()}});
+  poll: Subscription;
+  source: Observable<number>;
   currentState: Gamestate;
   showWinScreen:boolean = false;
   allPlayerOwned:number[][];
@@ -36,7 +35,14 @@ export class OnlineComponent implements AfterViewInit{
   ngOnDestroy(){
     this.baseGameService.reset()
     this.isDead = true;
-    this.poll.unsubscribe();
+    if(this.poll ==undefined){
+
+    }
+    else{
+      this.poll.unsubscribe();
+
+    }
+    
     
     
   }
@@ -44,7 +50,21 @@ export class OnlineComponent implements AfterViewInit{
     this.router.navigate(["/online-login"])
   }
   ngAfterViewInit(){
-    this.isDead = false;
+   this.isDead = false;
+    this.ngZone.runOutsideAngular(() => {
+      this.poll = interval(1000).subscribe(() => {
+        if (!this.isDead) {
+          this.ngZone.run(() => {
+            console.log("Polling working in prod!");
+            // this.sync();  // Real logic here
+          });
+        }
+      });
+    });
+  
+    
+    
+    
 
     
     this.currentState= null;
@@ -100,19 +120,7 @@ createAllPlayerOwned(Board:number[][]){
 
   url ="http://localhost:8080/test";
 
-  requestGame(){
-    this.apimasterService.getRequestGame(0).subscribe(
-      response =>{
-        this.currentState = response;
-        
-      }
-    )
-    
-    
-    
-    
-    
-  }
+
 
   init(){
     this.apimasterService.getInit()

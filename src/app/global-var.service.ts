@@ -12,7 +12,7 @@ export class GlobalVarService {
   public static hostBoard:Gamestate
   public static isHost:boolean;
   public static WichTurn:string;
-  public static url:string;
+  public static url:string = "http://localhost:8080";
   setWichTurn(pWichTurn:string){
     GlobalVarService.WichTurn = pWichTurn;
   }

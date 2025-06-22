@@ -53,6 +53,8 @@ export class PartyComponent {
       for(let x=0;x<this.powerUpsAll[ID].length;x++){
         if((this.powerUpsAll[ID])[x] === name){
           if(activate == true){
+            console.log(this.powerUpsAll[ID][x]);
+            console.log(this.powerUpsAll);
             (this.powerUpsAll[ID]).splice(x,1);      
            
           }
@@ -258,6 +260,7 @@ tetris(){
      
       this.baseGameService.changeSpielerID(); 
       this.baseGameService.gravityCheck();
+      this.disableButton();
   }
   } 
   resetGame(){
