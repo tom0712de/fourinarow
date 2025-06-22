@@ -7,7 +7,7 @@ import { APImasterService } from '../apimaster.service';
 import { Gamestate } from '../gamestate';
 import { GlobalVarService } from '../global-var.service';
 import { Console, error } from 'node:console';
-import { ChangeDetectorRef,NgZone } from '@angular/core';
+import { ChangeDetectorRef,NgZone,HostListener } from '@angular/core';
 import { interval } from 'rxjs';
 import { Subscription,  Observable } from 'rxjs';
 
@@ -20,6 +20,7 @@ import { Subscription,  Observable } from 'rxjs';
 export class OnlineComponent implements AfterViewInit{
   isDisabled:boolean = true;
   
+  
   constructor(private router: Router,public baseGameService: BasegameService,private http: HttpClient ,private ngZone: NgZone,public cdr: ChangeDetectorRef, public apimasterService: APImasterService,public globalVarService: GlobalVarService){
   
 
@@ -31,8 +32,10 @@ export class OnlineComponent implements AfterViewInit{
   currentState: Gamestate;
   showWinScreen:boolean = false;
   allPlayerOwned:number[][];
+  showExitScreen = false;
 
   ngOnDestroy(){
+    this.apimasterService.deleteBoard(this.globalVarService.getID());
     this.baseGameService.reset()
     this.isDead = true;
     if(this.poll ==undefined){
@@ -46,6 +49,10 @@ export class OnlineComponent implements AfterViewInit{
     
     
   }
+  @HostListener('window:beforeunload', ['$event'])
+  beforeunloadHandler(event): void {
+    this.apimasterService.deleteBoard(this.globalVarService.getID());
+  }
   newGame(){
     this.router.navigate(["/online-login"])
   }
@@ -56,7 +63,7 @@ export class OnlineComponent implements AfterViewInit{
         if (!this.isDead) {
           this.ngZone.run(() => {
             console.log("Polling working in prod!");
-            // this.sync();  // Real logic here
+            this.sync();  
           });
         }
       });
@@ -142,6 +149,7 @@ createAllPlayerOwned(Board:number[][]){
     }
   }
   sync(){
+
    
     this.apimasterService.getRequestGame(this.globalVarService.getID()).subscribe(
       response=>
@@ -154,6 +162,12 @@ createAllPlayerOwned(Board:number[][]){
           this.showWinScreen = true;
           
           
+        }
+        if(this.currentState.getID() ==999){
+          this.showExitScreen=true;
+          //this.router.navigate(["/"]);
+
+
         }
         
     

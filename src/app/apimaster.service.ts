@@ -27,7 +27,7 @@ export class APImasterService {
   data:Gamestate;
   getInit():Observable<any>{
     if(this.globalVarService.getUrl()!=undefined){
-      return this.http.get(this.globalVarService.getUrl()+"/init/").pipe(timeout(1),
+      return this.http.get(this.globalVarService.getUrl()+"/init/").pipe(timeout(30000),
         map(response =>{const JsonObj =response;
           return new Gamestate(JsonObj["board"],JsonObj["wichTurn"],JsonObj["id"])
         })
@@ -48,11 +48,12 @@ export class APImasterService {
     }
     else{
       let temp : string = (this.globalVarService.getUrl()+"/requestGame"+id)
-      return this.http.get(temp).pipe(timeout(1),
+      return this.http.get(temp).pipe(timeout(30000),
         map(response=>{var JsonObj = response;
           
           
           return new Gamestate(JsonObj["board"],JsonObj["wichTurn"],JsonObj["id"])
+          console.log("getRequest")
           
         }))
     }    
@@ -71,6 +72,11 @@ export class APImasterService {
       response=>{}
     );
 
+  }
+  deleteBoard(id:number){
+    this.http.delete(this.globalVarService.getUrl()+"/deleteGame"+id).subscribe(
+      response =>{}
+    )
   }
 
 }
