@@ -18,7 +18,7 @@ import { Subscription,  Observable } from 'rxjs';
   styleUrl: './online.component.scss'
 })
 export class OnlineComponent implements AfterViewInit{
-  isDisabled:boolean = true;
+  isDisabled:boolean;
   
   
   constructor(private router: Router,public baseGameService: BasegameService,private http: HttpClient ,private ngZone: NgZone,public cdr: ChangeDetectorRef, public apimasterService: APImasterService,public globalVarService: GlobalVarService){
@@ -29,10 +29,12 @@ export class OnlineComponent implements AfterViewInit{
   isDead:boolean = false;
   poll: Subscription;
   source: Observable<number>;
-  currentState: Gamestate;
+  currentState: Gamestate = null;
   showWinScreen:boolean = false;
   allPlayerOwned:number[][];
   showExitScreen = false;
+  isFirstRequest : boolean = true;
+  
 
   ngOnDestroy(){
     this.apimasterService.deleteBoard(this.globalVarService.getID());
@@ -57,6 +59,7 @@ export class OnlineComponent implements AfterViewInit{
     this.router.navigate(["/online-login"])
   }
   ngAfterViewInit(){
+   this.isDisabled= false;
    this.isDead = false;
     this.ngZone.runOutsideAngular(() => {
       this.poll = interval(1000).subscribe(() => {
@@ -86,8 +89,8 @@ export class OnlineComponent implements AfterViewInit{
    
     }
     else{
-      this.isDisabled = true;
-      this.sync();
+      this.isDisabled = false;
+      
       
    
 
@@ -149,55 +152,65 @@ createAllPlayerOwned(Board:number[][]){
     }
   }
   sync(){
+    console.log(this.currentState)
+   
+      
+    if(this.currentState == null || this.currentState.getID() !=999) {
+
+      console.log("3")
+    
 
    
-    this.apimasterService.getRequestGame(this.globalVarService.getID()).subscribe(
-      response=>
-      {this.currentState= null;
-        this.currentState = response;
-        this.baseGameService.setBoard(this.currentState.getBoard())
-       
-        if (this.baseGameService.checkForWin(this.createAllPlayerOwned(this.baseGameService.getBoard()),this.baseGameService.getBoard())){
+      this.apimasterService.getRequestGame(this.globalVarService.getID()).subscribe(
+        response=>
+        {
+          this.currentState = response;
+          this.baseGameService.setBoard(this.currentState.getBoard())
+          console.log("1")
+          if (this.baseGameService.checkForWin(this.createAllPlayerOwned(this.baseGameService.getBoard()),this.baseGameService.getBoard())){
 
-          this.showWinScreen = true;
+            this.showWinScreen = true;
+            
+            
+          }
+          if(this.currentState.getID() ==999 ){
+            this.showExitScreen=true;
+            console.log("exit")
+            this.isDisabled = true;
+            //this.router.navigate(["/"]);
+
+
+          }
           
-          
-        }
-        if(this.currentState.getID() ==999){
-          this.showExitScreen=true;
-          //this.router.navigate(["/"]);
-
-
-        }
-        
+      
+          this.baseGameService.setWichTurn(this.currentState.getWichTurn())
     
-        this.baseGameService.setWichTurn(this.currentState.getWichTurn())
-   
-        
-       
-        
-        if(this.baseGameService.getWichTurn() == this.globalVarService.getPlayer()){
           
-          this.isDisabled = false;
         
           
+          if(this.baseGameService.getWichTurn() == this.globalVarService.getPlayer()){
+            
+            this.isDisabled = false;
           
-        }
-        else{
-          this.isDisabled =true;
-     
-        }
+            
+            
+          }
+          else{
+            this.isDisabled =true;
+      
+          }
+          
         
-       
-      
-      
-      
-      },
-      
-    )
+        
+        
+        
+        },
+        
+      )
     
-     
+    }
   }
+  
   onClick(pX:number,pY:number,){
     this.baseGameService.clicked(pX,pY);
     let temp1:Gamestate = new Gamestate(this.baseGameService.getBoard(),this.baseGameService.getWichTurn(),this.globalVarService.getID());

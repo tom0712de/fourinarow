@@ -1,2 +1,4 @@
 ng build --configuration production --base-href "https://tom0712de.github.io/fourinarow/"
 use this for build and then upload browser folder
+
+sync not working seems like it doesnt get api respond

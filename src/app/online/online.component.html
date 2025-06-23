@@ -39,12 +39,12 @@
                 </button>
             </div>
         </div> 
-        <div *ngIf="true" class="absolute w-150 h-50 z-9 bg-stone-700/75 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-xl flex flex-col place-items-center">
+        <div *ngIf="showExitScreen" class="absolute w-150 h-50 z-9 bg-stone-700/75 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-xl flex flex-col place-items-center">
             <p class="text-zinc-200  text-4xl text-center ">
                 your Opponent has left the Game
 
             </p>
-            <button (click) = "baseGameService.goMenu()" class="justify-center rounded-xl  bg-radial from-indigo-800 to-gray-900 m-5 bg-opacity-100 h-20 w-50 z-10 ">
+            <button (click) = "baseGameService.goMenu()" class="justify-center rounded-xl  bg-radial from-slate-700 to-gray-900 m-5 bg-opacity-100 h-20 w-50 z-10 ">
                 <p class="text-amber-500 italic text-2xl">
                     Main Menu
                 </p>
@@ -54,20 +54,20 @@
 
         </div>
 
-        <div *ngIf="showWinScreen"class ="absolute w-150 h-50 z-9 bg-stone-700/75 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-xl">
-            <p class = "text-zinc-200  text-4xl text-center">
+        <div *ngIf="showWinScreen"class ="absolute w-150 h-50 z-9 bg-stone-700/75 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-xl flex flex-col">
+            <p class = "text-zinc-200  text-4xl text-center place-items-center">
                 {{baseGameService.text}} hat gewonnen !!!
 
             </p>
-            <div class = "menuDiv">
-                <button (click) = "newGame()" class= "rounded-xl  bg-radial from-indigo-800 to-gray-900 m-5 bg-opacity-100 h-20 w-50 z-10 shadow-xl">
+            <div class = "menuDiv flex justify-center">
+                <button (click) = "newGame()" class= "rounded-xl  bg-radial from-slate-700 to-gray-900 m-5 bg-opacity-100 h-20 w-50 z-10 shadow-xl place-items-center">
                     <p class = "text-amber-500 italic text-2xl">
                         New Game
 
                     </p>
 
                 </button>
-                <button (click) = "baseGameService.goMenu()" class = "rounded-xl  bg-radial from-indigo-800 to-gray-900 m-5 bg-opacity-100 h-20 w-50 z-10 ">
+                <button (click) = "baseGameService.goMenu()" class = "rounded-xl  bg-radial from-slate-700 to-gray-900 m-5 bg-opacity-100 h-20 w-50 z-10 pl">
                     <p class = "text-amber-500 italic text-2xl">
                         Hauptmenü
 
